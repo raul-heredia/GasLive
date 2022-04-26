@@ -27,7 +27,7 @@ export default function Mapa() {
             view.animate({
                 center: fromLonLat([longitud, latitud]),
                 zoom: 11,
-                duration: 1500,
+                duration: 1250,
             })
         });
     } else {
