@@ -7,10 +7,32 @@ import OSM from 'ol/source/OSM';
 import "./Mapa.css";
 export default function Mapa() {
     const [map, setMap] = useState();
+
+    let [
+        view = new View({
+            center: fromLonLat([-3.70256, 40.4165]),
+            zoom: 5
+        }),
+        latitud = 40.4165,
+        longitud = -3.70256
+    ] = useState();
     const mapElement = useRef();
     const mapRef = useRef();
     mapRef.current = map;
-
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function (posicio) {
+            latitud = posicio.coords.latitude;
+            longitud = posicio.coords.longitude;
+            console.log("state", latitud, longitud)
+            view.animate({
+                center: fromLonLat([longitud, latitud]),
+                zoom: 11,
+                duration: 1500,
+            })
+        });
+    } else {
+        console.log("Localització no disponible")
+    }
     useEffect(() => {
         const initialMap = new Map({
             target: mapElement.current,
@@ -19,10 +41,7 @@ export default function Mapa() {
                     source: new OSM(),
                 }),
             ],
-            view: new View({
-                center: fromLonLat([2.190907184737403, 41.41310947011314]),
-                zoom: 7,
-            })
+            view: view
         });
         setMap(initialMap);
     }, []);
