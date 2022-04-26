@@ -18,13 +18,13 @@ function Nav() {
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
-                <NavLink to="/" className={({ isActive }) => (isActive ? `${defaultClasses} text-white` : `${defaultClasses} text-gray-300`)}>
+                <NavLink to="/" className={({ isActive }) => (isActive ? `${defaultClasses} text-amber-500` : `${defaultClasses} text-gray-300`)}>
                   Mapa
                 </NavLink>
-                <NavLink to="/lista" className={({ isActive }) => (isActive ? `${defaultClasses} text-white` : `${defaultClasses} text-gray-300`)}>
+                <NavLink to="/lista" className={({ isActive }) => (isActive ? `${defaultClasses} text-amber-500` : `${defaultClasses} text-gray-300`)}>
                   Lista
                 </NavLink>
-                <NavLink to="/favoritos" className={({ isActive }) => (isActive ? `${defaultClasses} text-white` : `${defaultClasses} text-gray-300`)}>
+                <NavLink to="/favoritos" className={({ isActive }) => (isActive ? `${defaultClasses} text-amber-500` : `${defaultClasses} text-gray-300`)}>
                   Favoritos
                 </NavLink>
               </div>
@@ -66,17 +66,17 @@ function Nav() {
           <div className="md:hidden" id="mobile-menu">
             <div ref={ref} className="px-2 pt-3 pb-5 space-y-1 flex flex-col gap-3 sm:px-3">
               <div>
-                <NavLink to="/" className={({ isActive }) => (isActive ? `${defaultClasses} block text-white` : `${defaultClasses} block text-gray-300`)}>
+                <NavLink to="/" className={({ isActive }) => (isActive ? `${defaultClasses} block text-amber-500` : `${defaultClasses} block text-gray-300`)}>
                   Mapa
                 </NavLink>
               </div>
               <div>
-                <NavLink to="/lista" className={({ isActive }) => (isActive ? `${defaultClasses} block text-white` : `${defaultClasses} block text-gray-300`)}>
+                <NavLink to="/lista" className={({ isActive }) => (isActive ? `${defaultClasses} block text-amber-500` : `${defaultClasses} block text-gray-300`)}>
                   Lista
                 </NavLink>
               </div>
               <div>
-                <NavLink to="/favoritos" className={({ isActive }) => (isActive ? `${defaultClasses} block text-white` : `${defaultClasses} block text-gray-300`)}>
+                <NavLink to="/favoritos" className={({ isActive }) => (isActive ? `${defaultClasses} block text-amber-500` : `${defaultClasses} block text-gray-300`)}>
                   Favoritos
                 </NavLink>
               </div>
