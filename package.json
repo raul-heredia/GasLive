@@ -9,9 +9,10 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.6.0",
-    "ol": "^6.14.1",
+    "leaflet": "^1.8.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-leaflet": "^4.0.0",
     "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
