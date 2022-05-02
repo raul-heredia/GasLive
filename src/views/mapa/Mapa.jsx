@@ -7,7 +7,7 @@ import './Mapa.css';
 
 import { fetchGasolineras } from '../../assets/functions/fetchGasolineras'
 import { calcCrow } from "../../assets/functions/calcDistancia";
-import { repsol } from "../../assets/functions/icons";
+import { defaultIcon, repsol } from "../../assets/functions/icons";
 
 export default function Mapa() {
     // Obtenemos localizacion del usuario y lo mostramos en el mapa
@@ -77,7 +77,16 @@ export default function Mapa() {
                     gasolineras.push(g);
                     if (calcCrow(ubicacionUsuari.lat, ubicacionUsuari.lng, g.latitud, g.longitud).toFixed(1) <= 35) {
                         console.log(g)
-                        const marker = L.marker([g.latitud, g.longitud], { icon: repsol }).bindPopup("I am a green leaf.");
+                        let icono;
+                        switch (g.rotulo) {
+                            case "REPSOL":
+                                icono = repsol;
+                                break;
+                            default:
+                                icono = defaultIcon;
+                                break;
+                        }
+                        const marker = L.marker([g.latitud, g.longitud], { icon: icono }).bindPopup("I am a green leaf.");
                         marker.addTo(map);
                     }
                 });
