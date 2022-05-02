@@ -1,13 +1,12 @@
 
 import React, { useEffect, useState } from "react";
-import { MapContainer as Map, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
+import { MapContainer as Map, TileLayer, useMap } from 'react-leaflet';
 import L from "leaflet";
 import './Mapa.css';
 
 import { fetchGasolineras } from '../../assets/functions/fetchGasolineras'
 import { calcCrow } from "../../assets/functions/calcDistancia";
-import { defaultIcon, repsol } from "../../assets/functions/icons";
+import * as Iconos from "../../assets/functions/icons";
 
 export default function Mapa() {
     // Obtenemos localizacion del usuario y lo mostramos en el mapa
@@ -75,18 +74,57 @@ export default function Mapa() {
                         gasolina98: gasolina98
                     }
                     gasolineras.push(g);
-                    if (calcCrow(ubicacionUsuari.lat, ubicacionUsuari.lng, g.latitud, g.longitud).toFixed(1) <= 35) {
+                    if (calcCrow(ubicacionUsuari.lat, ubicacionUsuari.lng, g.latitud, g.longitud).toFixed(1) <= 100) {
                         console.log(g)
-                        let icono;
-                        switch (g.rotulo) {
-                            case "REPSOL":
-                                icono = repsol;
-                                break;
-                            default:
-                                icono = defaultIcon;
-                                break;
-                        }
-                        const marker = L.marker([g.latitud, g.longitud], { icon: icono }).bindPopup("I am a green leaf.");
+                        let rotulo = g.rotulo.split(' ');
+                        let texto = `
+                            <h1 class="text-xl mb-2">${g.rotulo}</h1>
+                            <p><span class="font-bold">Dirección: </span><span>${g.direccion} ${codigoPostal}</span>
+                            <p><span class="font-bold">Horario: </span><span>${g.horario}</span>
+                            <div class="tablaCombustible rounded-lg border shadow-2xl mt-5">
+                                <table class="table-auto w-full text-left">
+                                    <thead>
+                                        <tr class="bg-gray-800 rounded-lg">
+                                            <th class="p-4 text-neutral-50 text-left">Combustible</th>
+                                            <th class="p-4 text-neutral-50 text-left">Precio</th>
+                                        </tr>
+                                    <tbody>
+                                            <tr class="bg-gray-800 text-center">
+                                                <th colspan="2" class="p-4 text-neutral-50">Gasoil</th>
+                                            </tr>
+                                            ${g.gasoilA && `<tr>
+                                                <td class="p-4">Gasoil A</td>
+                                                <td class="p-4">${g.gasoilA} €</td>
+                                            </tr>`}
+                                            ${g.gasoilPremium && `<tr>
+                                                <td class="p-4">Gasoil Premium</td>
+                                                <td class="p-4">${g.gasoilPremium} €</td>
+                                            </tr>`}
+                                            ${g.gasoilB && `<tr>
+                                                <td class="p-4">Gasoil Agrícola</td>
+                                                <td class="p-4">${g.gasoilB} €</td>
+                                            </tr>`}
+                                            <tr class="bg-gray-800 text-center">
+                                                <th colspan="2" class="p-4 text-neutral-50">Gasolina</th>
+                                            </tr>
+                                            ${g.gasolina95 && `<tr>
+                                                <td class="p-4">Gasolina 95</td>
+                                                <td class="p-4">${g.gasolina95} €</td>
+                                            </tr>`}
+                                            ${g.gasolina95Premium && `<tr>
+                                                <td class="p-4">Gasolina 95 Premium</td>
+                                                <td class="p-4">${g.gasolina95Premium} €</td>
+                                            </tr>`}
+                                            ${g.gasolina98 && `<tr>
+                                                <td class="p-4">Gasolina 98</td>
+                                                <td class="p-4">${g.gasolina98} €</td>
+                                            </tr>`}
+                                    </tbody>
+                                </table>
+                            </div>
+                                            
+                        `;
+                        const marker = L.marker([g.latitud, g.longitud], { icon: Iconos[rotulo[0]] ? Iconos[rotulo[0]] : Iconos.defaultIcon }).bindPopup(texto);
                         marker.addTo(map);
                     }
                 });

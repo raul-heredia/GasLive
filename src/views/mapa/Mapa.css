@@ -8,3 +8,14 @@ body{
     width: 100%;
     height: 100%;
 }
+.leaflet-popup-content p{
+    margin: 0;
+}
+
+.tablaCombustible thead th:first-of-type{
+    border-top-left-radius: 8px; 
+}
+
+.tablaCombustible thead th:last-of-type{
+border-top-right-radius: 8px; 
+}
