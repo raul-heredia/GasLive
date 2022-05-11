@@ -78,3 +78,9 @@ export var BALLENOIL = L.icon({
     iconAnchor: [32, 64], // point of the icon which will correspond to marker's location
     popupAnchor: [0, -60] // point from which the popup should open relative to the iconAnchor
 });
+export var PETROPRIX = L.icon({
+    iconUrl: '/icons/PETROPRIX.png',
+    iconSize: [48, 48], // size of the icon
+    iconAnchor: [32, 48], // point of the icon which will correspond to marker's location
+    popupAnchor: [-8, -30] // point from which the popup should open relative to the iconAnchor
+});

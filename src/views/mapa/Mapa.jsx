@@ -63,6 +63,10 @@ export default function Mapa() {
                     let gasolina95 = gasolinera['Precio Gasolina 95 E10'] ? gasolinera['Precio Gasolina 95 E10'] : gasolinera['Precio Gasolina 95 E5'];
                     let gasolina95Premium = gasolinera['Precio Gasolina 95 E5 Premium'];
                     let gasolina98 = gasolinera['Precio Gasolina 98 E10'] ? gasolinera['Precio Gasolina 98 E10'] : gasolinera['Precio Gasolina 98 E5'];
+                    // Precio Gases
+                    let gnc = gasolinera['Precio Gas Natural Comprimido'];
+                    let gnl = gasolinera['Precio Gas Natural Licuado'];
+                    let glp = gasolinera['Precio Gases licuados del petróleo'];
                     let g = {
                         key: key,
                         latitud: lat,
@@ -79,7 +83,10 @@ export default function Mapa() {
                         gasoilPremium: gasoilPremium,
                         gasolina95: gasolina95,
                         gasolina95Premium: gasolina95Premium,
-                        gasolina98: gasolina98
+                        gasolina98: gasolina98,
+                        gnc: gnc,
+                        gnl: gnl,
+                        glp: glp
                     }
                     gasolineras.push(g);
                     //console.log(g)
@@ -96,9 +103,10 @@ export default function Mapa() {
                                             <th class="p-4 text-neutral-50 text-left">Precio</th>
                                         </tr>
                                     <tbody>
+                                            ${(g.gasoilA || g.gasoilPremium || g.gasoilB) && `
                                             <tr class="bg-gray-800 text-center">
                                                 <th colspan="2" class="p-4 text-neutral-50">Gasoil</th>
-                                            </tr>
+                                            </tr>`}
                                             ${g.gasoilA && `<tr>
                                                 <td class="p-4">Gasoil A</td>
                                                 <td class="p-4">${g.gasoilA} €</td>
@@ -111,9 +119,10 @@ export default function Mapa() {
                                                 <td class="p-4">Gasoil Agrícola</td>
                                                 <td class="p-4">${g.gasoilB} €</td>
                                             </tr>`}
+                                            ${(g.gasolina95 || g.gasolina95Premium || g.gasolina98) && `
                                             <tr class="bg-gray-800 text-center">
                                                 <th colspan="2" class="p-4 text-neutral-50">Gasolina</th>
-                                            </tr>
+                                            </tr>`}
                                             ${g.gasolina95 && `<tr>
                                                 <td class="p-4">Gasolina 95</td>
                                                 <td class="p-4">${g.gasolina95} €</td>
@@ -126,6 +135,22 @@ export default function Mapa() {
                                                 <td class="p-4">Gasolina 98</td>
                                                 <td class="p-4">${g.gasolina98} €</td>
                                             </tr>`}
+                                            ${(g.gnc || g.gnl || g.glp) && `
+                                            <tr class="bg-gray-800 text-center">
+                                                <th colspan="2" class="p-4 text-neutral-50">Gas</th>
+                                            </tr>`}
+                                            ${g.gnc && `<tr>
+                                                <td class="p-4">GNC</td>
+                                                <td class="p-4">${g.gnc} €</td>
+                                            </tr>`}
+                                            ${g.gnl && `<tr>
+                                                <td class="p-4">GNL</td>
+                                                <td class="p-4">${g.gnl} €</td>
+                                            </tr>`}
+                                            ${g.glp && `<tr>
+                                                <td class="p-4">GLP</td>
+                                                <td class="p-4">${g.glp} €</td>
+                                            </tr>`}
                                     </tbody>
                                 </table>
                             </div>
@@ -133,7 +158,6 @@ export default function Mapa() {
                         `;
                     const marker = L.marker([g.latitud, g.longitud], { icon: Iconos[rotuloIcon[0]] ? Iconos[rotuloIcon[0]] : Iconos.defaultIcon }).bindPopup(texto);
                     markers.addLayer(marker);
-
                 });
                 map.addLayer(markers);
             }).then(() => console.log("final"));
