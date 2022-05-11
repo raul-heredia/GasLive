@@ -72,3 +72,9 @@ export var CAMPSA = L.icon({
     iconAnchor: [32, 64], // point of the icon which will correspond to marker's location
     popupAnchor: [5, -35] // point from which the popup should open relative to the iconAnchor
 });
+export var BALLENOIL = L.icon({
+    iconUrl: '/icons/BALLENOIL.png',
+    iconSize: [64, 64], // size of the icon
+    iconAnchor: [32, 64], // point of the icon which will correspond to marker's location
+    popupAnchor: [0, -60] // point from which the popup should open relative to the iconAnchor
+});
