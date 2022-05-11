@@ -1,7 +1,9 @@
 
 import React, { useEffect, useState } from "react";
 import { MapContainer as Map, TileLayer, useMap } from 'react-leaflet';
-import L from "leaflet";
+import * as L from 'leaflet';
+import 'leaflet.markercluster';
+
 import './Mapa.css';
 
 import { fetchGasolineras } from '../../assets/functions/fetchGasolineras'
@@ -12,6 +14,12 @@ export default function Mapa() {
     // Obtenemos localizacion del usuario y lo mostramos en el mapa
     let gasolineras = useState([]);
     let ubicacionUsuari = useState();
+    let markers = L.markerClusterGroup({
+        showCoverageOnHover: false,
+        zoomToBoundsOnClick: true,
+        animate: false
+    });
+    markers.clearLayers();
     function LocationMarker() {
         const [position, setPosition] = useState(null);
         const [bbox, setBbox] = useState([]);
@@ -43,7 +51,7 @@ export default function Mapa() {
                     let localidad = gasolinera['Localidad'];
                     let municipio = gasolinera['Municipio'];
                     let provincia = gasolinera['Provincia'];
-                    let rotulo = gasolinera['Rótulo']
+                    let rotulo = gasolinera['Rótulo'];
                     // Coordenadas
                     let long = gasolinera['Longitud (WGS84)'].replace(',', '.');
                     let lat = gasolinera['Latitud'].replace(',', '.');
@@ -74,10 +82,9 @@ export default function Mapa() {
                         gasolina98: gasolina98
                     }
                     gasolineras.push(g);
-                    if (calcCrow(ubicacionUsuari.lat, ubicacionUsuari.lng, g.latitud, g.longitud).toFixed(1) <= 100) {
-                        console.log(g)
-                        let rotulo = g.rotulo.split(' ');
-                        let texto = `
+                    //console.log(g)
+                    let rotuloIcon = g.rotulo.split(' ');
+                    let texto = `
                             <h1 class="text-xl mb-2">${g.rotulo}</h1>
                             <p><span class="font-bold">Dirección: </span><span>${g.direccion} ${codigoPostal}</span>
                             <p><span class="font-bold">Horario: </span><span>${g.horario}</span>
@@ -124,10 +131,11 @@ export default function Mapa() {
                             </div>
                                             
                         `;
-                        const marker = L.marker([g.latitud, g.longitud], { icon: Iconos[rotulo[0]] ? Iconos[rotulo[0]] : Iconos.defaultIcon }).bindPopup(texto);
-                        marker.addTo(map);
-                    }
+                    const marker = L.marker([g.latitud, g.longitud], { icon: Iconos[rotuloIcon[0]] ? Iconos[rotuloIcon[0]] : Iconos.defaultIcon }).bindPopup(texto);
+                    markers.addLayer(marker);
+
                 });
+                map.addLayer(markers);
             }).then(() => console.log("final"));
         }, [map]);
     }

@@ -66,3 +66,9 @@ export var PETROCAT = L.icon({
     iconAnchor: [16, 32], // point of the icon which will correspond to marker's location
     popupAnchor: [0, -35] // point from which the popup should open relative to the iconAnchor
 });
+export var CAMPSA = L.icon({
+    iconUrl: '/icons/CAMPSA.png',
+    iconSize: [64, 64], // size of the icon
+    iconAnchor: [32, 64], // point of the icon which will correspond to marker's location
+    popupAnchor: [5, -35] // point from which the popup should open relative to the iconAnchor
+});
