@@ -62,8 +62,8 @@ export var SHELL = L.icon({
 });
 export var PETROCAT = L.icon({
     iconUrl: '/icons/PETROCAT.png',
-    iconSize: [32, 32], // size of the icon
-    iconAnchor: [16, 32], // point of the icon which will correspond to marker's location
+    iconSize: [48, 48], // size of the icon
+    iconAnchor: [24, 48], // point of the icon which will correspond to marker's location
     popupAnchor: [0, -35] // point from which the popup should open relative to the iconAnchor
 });
 export var CAMPSA = L.icon({
@@ -83,4 +83,22 @@ export var PETROPRIX = L.icon({
     iconSize: [48, 48], // size of the icon
     iconAnchor: [32, 48], // point of the icon which will correspond to marker's location
     popupAnchor: [-8, -30] // point from which the popup should open relative to the iconAnchor
+});
+export var NATURGY = L.icon({
+    iconUrl: '/icons/NATURGY.png',
+    iconSize: [64, 54], // size of the icon
+    iconAnchor: [32, 54], // point of the icon which will correspond to marker's location
+    popupAnchor: [-6, -30] // point from which the popup should open relative to the iconAnchor
+});
+export var PETRONOR = L.icon({
+    iconUrl: '/icons/PETRONOR.png',
+    iconSize: [34, 27], // size of the icon
+    iconAnchor: [16, 27], // point of the icon which will correspond to marker's location
+    popupAnchor: [-6, -30] // point from which the popup should open relative to the iconAnchor
+});
+export var TAMOIL = L.icon({
+    iconUrl: '/icons/TAMOIL.png',
+    iconSize: [48, 24], // size of the icon
+    iconAnchor: [24, 24], // point of the icon which will correspond to marker's location
+    popupAnchor: [0, -30] // point from which the popup should open relative to the iconAnchor
 });

@@ -3,12 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@headlessui/react": "^1.6.0",
+    "@headlessui/react": "^1.6.1",
+    "@heroicons/react": "^1.0.6",
     "leaflet": "^1.8.0",
     "leaflet.markercluster": "^1.5.3",
     "react": "^18.0.0",
