@@ -111,7 +111,7 @@ export default function Lista() {
                             return (
                                 <tr key={gasolinera.key} >
                                     <td className="p-4">{gasolinera.distanciaA} KM</td>
-                                    <td className="p-4">{gasolinera.rotulo}</td>
+                                    <td className="p-4"><a className="text-blue-600 hover:text-blue-900 visited:text-blue-600" target="_blank" href={`https://maps.google.com/?ll=${gasolinera.latitud},${gasolinera.longitud}`}>{gasolinera.rotulo}</a></td>
                                     <td className={"p-4 " + (gasolinera.gasolina95 > mediasCombustible.media95 ? 'caro' : 'barato')}>{gasolinera.gasolina95 && gasolinera.gasolina95 != 999 ? gasolinera.gasolina95 + "€" : nd}</td>
                                     <td className={"p-4 " + (gasolinera.gasolina98 > mediasCombustible.media98 ? 'caro' : 'barato')}>{gasolinera.gasolina98 && gasolinera.gasolina98 != 999 ? gasolinera.gasolina98 + "€" : nd}</td>
                                     <td className={"p-4 " + (gasolinera.gasoilA > mediasCombustible.mediaGasA ? 'caro' : 'barato')}>{gasolinera.gasoilA && gasolinera.gasoilA != 999 ? gasolinera.gasoilA + "€" : nd}</td>
