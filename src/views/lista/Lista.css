@@ -7,3 +7,6 @@
 .nd{
     color: #000000 !important;
 }
+input[type=range]::-webkit-slider-thumb {
+    background: red !important;
+  }

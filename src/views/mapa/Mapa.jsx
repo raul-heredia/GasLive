@@ -42,23 +42,12 @@ export default function Mapa() {
             });
         }, [map]);
     }
-    function LoadMarkers() {
-        const map = useMap();
-        map.eachLayer(function (layer) {
-            console.log(layer);
-            if (!layer._url) map.removeLayer(layer); // Quitar todos los layers excepto el del mapa para que no se dupliquen los iconos
-        });
-        useEffect(() => {
-            if (sessionStorage.getItem('gasolineras')) {
-                gasolineras = JSON.parse(sessionStorage.getItem('gasolineras'));
-                gasolineras.splice(0, 1)
-                gasolineras.splice(0, 1)
-                gasolineras.forEach((g) => {
-                    let rotuloIcon = g.rotulo.split(' ');
-                    let texto = `
-                            <h1 class="text-xl mb-2">${g.rotulo}</h1>
-                            <p><span class="font-bold">Dirección: </span><span>${g.direccion}, ${g.codigoPostal}</span>
-                            <p><span class="font-bold">Horario: </span><span>${g.horario}</span>
+    function returnText(g) {
+        return `
+        <h1 class="text-xl mb-2">${g.rotulo}</h1>
+                            <p><span class="font-bold">Dirección: </span><span>${g.direccion}, ${g.codigoPostal}</span></p>
+                            <p><span class="font-bold">Horario: </span><span>${g.horario}</span></p>
+                            <a className="text-gray-800 hover:text-gray-700 visited:text-gray-800" target="_blank" href="https://maps.google.com/?ll=${g.latitud},${g.longitud}">Abrir En Google Maps</a>
                             <div class="tablaCombustible rounded-lg border shadow-2xl mt-5">
                                 <table class="table-auto w-full text-left">
                                     <thead>
@@ -119,8 +108,21 @@ export default function Mapa() {
                                     </tbody>
                                 </table>
                             </div>
-                                            
-                        `;
+        `
+    }
+    function LoadMarkers() {
+        const map = useMap();
+        map.eachLayer(function (layer) {
+            if (!layer._url) map.removeLayer(layer); // Quitar todos los layers excepto el del mapa para que no se dupliquen los iconos
+        });
+        useEffect(() => {
+            if (sessionStorage.getItem('gasolineras')) {
+                gasolineras = JSON.parse(sessionStorage.getItem('gasolineras'));
+                gasolineras.splice(0, 1)
+                gasolineras.splice(0, 1)
+                gasolineras.forEach((g) => {
+                    let rotuloIcon = g.rotulo.split(' ');
+                    let texto = returnText(g);
                     const marker = L.marker([g.latitud, g.longitud], { icon: Iconos[rotuloIcon[0]] ? Iconos[rotuloIcon[0]] : Iconos.defaultIcon }).bindPopup(texto);
                     markers.addLayer(marker);
                 });
@@ -176,71 +178,7 @@ export default function Mapa() {
                         gasolineras.push(g);
                         //console.log(g)
                         let rotuloIcon = g.rotulo.split(' ');
-                        let texto = `
-                                <h1 class="text-xl mb-2">${g.rotulo}</h1>
-                                <p><span class="font-bold">Dirección: </span><span>${g.direccion}, ${g.codigoPostal}</span>
-                                <p><span class="font-bold">Horario: </span><span>${g.horario}</span>
-                                <div class="tablaCombustible rounded-lg border shadow-2xl mt-5">
-                                    <table class="table-auto w-full text-left">
-                                        <thead>
-                                            <tr class="bg-gray-800 rounded-lg">
-                                                <th class="p-4 text-neutral-50 text-left">Combustible</th>
-                                                <th class="p-4 text-neutral-50 text-left">Precio</th>
-                                            </tr>
-                                        <tbody>
-                                                ${(g.gasoilA || g.gasoilPremium || g.gasoilB) && `
-                                                <tr class="bg-gray-800 text-center">
-                                                    <th colspan="2" class="p-4 text-neutral-50">Gasoil</th>
-                                                </tr>`}
-                                                ${g.gasoilA && `<tr>
-                                                    <td class="p-4">Gasoil A</td>
-                                                    <td class="p-4">${g.gasoilA} €</td>
-                                                </tr>`}
-                                                ${g.gasoilPremium && `<tr>
-                                                    <td class="p-4">Gasoil Premium</td>
-                                                    <td class="p-4">${g.gasoilPremium} €</td>
-                                                </tr>`}
-                                                ${g.gasoilB && `<tr>
-                                                    <td class="p-4">Gasoil Agrícola</td>
-                                                    <td class="p-4">${g.gasoilB} €</td>
-                                                </tr>`}
-                                                ${(g.gasolina95 || g.gasolina95Premium || g.gasolina98) && `
-                                                <tr class="bg-gray-800 text-center">
-                                                    <th colspan="2" class="p-4 text-neutral-50">Gasolina</th>
-                                                </tr>`}
-                                                ${g.gasolina95 && `<tr>
-                                                    <td class="p-4">Gasolina 95</td>
-                                                    <td class="p-4">${g.gasolina95} €</td>
-                                                </tr>`}
-                                                ${g.gasolina95Premium && `<tr>
-                                                    <td class="p-4">Gasolina 95 Premium</td>
-                                                    <td class="p-4">${g.gasolina95Premium} €</td>
-                                                </tr>`}
-                                                ${g.gasolina98 && `<tr>
-                                                    <td class="p-4">Gasolina 98</td>
-                                                    <td class="p-4">${g.gasolina98} €</td>
-                                                </tr>`}
-                                                ${(g.gnc || g.gnl || g.glp) && `
-                                                <tr class="bg-gray-800 text-center">
-                                                    <th colspan="2" class="p-4 text-neutral-50">Gas</th>
-                                                </tr>`}
-                                                ${g.gnc && `<tr>
-                                                    <td class="p-4">GNC</td>
-                                                    <td class="p-4">${g.gnc} €</td>
-                                                </tr>`}
-                                                ${g.gnl && `<tr>
-                                                    <td class="p-4">GNL</td>
-                                                    <td class="p-4">${g.gnl} €</td>
-                                                </tr>`}
-                                                ${g.glp && `<tr>
-                                                    <td class="p-4">GLP</td>
-                                                    <td class="p-4">${g.glp} €</td>
-                                                </tr>`}
-                                        </tbody>
-                                    </table>
-                                </div>
-                                                
-                            `;
+                        let texto = returnText(g);
                         const marker = L.marker([g.latitud, g.longitud], { icon: Iconos[rotuloIcon[0]] ? Iconos[rotuloIcon[0]] : Iconos.defaultIcon }).bindPopup(texto);
                         markers.addLayer(marker);
                     });

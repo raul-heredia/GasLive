@@ -7,30 +7,46 @@ import "./Lista.css";
 export default function Lista() {
     const [gasolineras, setGasolineras] = useState([]);
     const [gasFilter, setGasFilter] = useState([]);
+    const [distanciaFilter, setDistanciaFilter] = useState(5);
     const [mediasCombustible, setMediasCombustible] = useState({});
     const [ubicacionUsuari, setUbicacionUsuari] = useState({})
-    const [clickValue, setClickValue] = useState('');
+    const [sortBy, setSortBy] = useState('distanciaA');
+    const [orderBy, setOrderBy] = useState(1);
     useEffect(() => {
         document.body.classList.remove('overflownt');
         document.body.classList.add('overflow');
         let gasTemp = JSON.parse(sessionStorage.getItem('gasolineras'));
         let ubiTemp = JSON.parse(sessionStorage.getItem('ubicacionUsuari'));
+        gasTemp.splice(0, 1);
+        gasTemp.splice(0, 1);
+        setUbicacionUsuari(ubiTemp);
+        filterGasolineras()
+        setGasolineras(gasTemp);
+    })
+    function filterGasolineras() {
         let mediasTemp = {};
-        gasTemp.splice(0, 1)
-        gasTemp.splice(0, 1)
         let gasFilterTemp = [];
         let media95 = 0, media98 = 0, mediaGasoilA = 0, mediaGasoilP = 0, mediaGnc = 0, mediaGnl = 0, mediaGlp = 0;
         let c95 = 0, c98 = 0, cGasA = 0, cGasP = 0, cGnc = 0, cGnl = 0, cGlp = 0;
-        gasTemp.forEach(gasolinera => {
-            let distancia = calcCrow(ubiTemp.lat, ubiTemp.lng, gasolinera.latitud, gasolinera.longitud).toFixed(1)
-            if (distancia <= 22) {
-                if (gasolinera.gasolina95) c95 += 1; media95 += gasolinera.gasolina95.replace(',', '.') * 1;
-                if (gasolinera.gasolina98) c98 += 1; media98 += gasolinera.gasolina98.replace(',', '.') * 1;
-                if (gasolinera.gasoilA) cGasA += 1; mediaGasoilA += gasolinera.gasoilA.replace(',', '.') * 1;
-                if (gasolinera.gasoilPremium) cGasP += 1; mediaGasoilP += gasolinera.gasoilPremium.replace(',', '.') * 1;
-                if (gasolinera.gnc) cGnc += 1; mediaGnc += gasolinera.gnc.replace(',', '.') * 1;
-                if (gasolinera.gnl) cGnl += 1; mediaGnl += gasolinera.gnl.replace(',', '.') * 1;
-                if (gasolinera.glp) cGlp += 1; mediaGlp += gasolinera.glp.replace(',', '.') * 1;
+        gasolineras.forEach(gasolinera => {
+            let distancia = calcCrow(ubicacionUsuari.lat, ubicacionUsuari.lng, gasolinera.latitud, gasolinera.longitud).toFixed(1)
+            if (distancia <= distanciaFilter) {
+                try {
+                    gasolinera.gasolina95 = gasolinera.gasolina95.replace(',', '.') * 1;
+                    gasolinera.gasolina98 = gasolinera.gasolina98.replace(',', '.') * 1;
+                    gasolinera.gasoilA = gasolinera.gasoilA.replace(',', '.') * 1;
+                    gasolinera.gasoilPremium = gasolinera.gasoilPremium.replace(',', '.') * 1;
+                    gasolinera.gnc = gasolinera.gnc.replace(',', '.') * 1;
+                    gasolinera.gnl = gasolinera.gnl.replace(',', '.') * 1;
+                    gasolinera.glp = gasolinera.glp.replace(',', '.') * 1;
+                } catch (error) { }
+                if (gasolinera.gasolina95) c95 += 1; media95 += gasolinera.gasolina95;
+                if (gasolinera.gasolina98) c98 += 1; media98 += gasolinera.gasolina98;
+                if (gasolinera.gasoilA) cGasA += 1; mediaGasoilA += gasolinera.gasoilA;
+                if (gasolinera.gasoilPremium) cGasP += 1; mediaGasoilP += gasolinera;
+                if (gasolinera.gnc) cGnc += 1; mediaGnc += gasolinera.gnc;
+                if (gasolinera.gnl) cGnl += 1; mediaGnl += gasolinera.gnl;
+                if (gasolinera.glp) cGlp += 1; mediaGlp += gasolinera.glp;
                 gasolinera.distanciaA = distancia;
                 gasFilterTemp.push(gasolinera);
             }
@@ -38,19 +54,42 @@ export default function Lista() {
         media95 = (media95 / c95).toFixed(3); media98 = (media98 / c98).toFixed(3); mediaGasoilA = (mediaGasoilA / cGasA).toFixed(3); mediaGasoilP = (mediaGasoilP / cGasP).toFixed(3); mediaGnc = (mediaGnc / cGnc).toFixed(3); mediaGnl = (mediaGnl / cGnl).toFixed(3); mediaGlp = (mediaGlp / cGlp).toFixed(3);
         mediasTemp.media95 = media95; mediasTemp.media98 = media98; mediasTemp.mediaGasA = mediaGasoilA; mediasTemp.mediaGasP = mediaGasoilP; mediasTemp.mediaGnc = mediaGnc; mediasTemp.mediaGnl = mediaGnl; mediasTemp.mediaGlp = mediaGlp;
         gasFilterTemp.sort((a, b) => {
-            return a.distanciaA - b.distanciaA;
+            if (orderBy) {
+                if (!a[sortBy]) a[sortBy] = 999;
+                if (!b[sortBy]) b[sortBy] = 999;
+                return a[sortBy] - b[sortBy];
+            } else {
+                return b[sortBy] - a[sortBy];
+            }
         });
-        setUbicacionUsuari(ubiTemp);
-        setGasolineras(gasTemp);
         setGasFilter(gasFilterTemp);
         setMediasCombustible(mediasTemp);
-    })
-    function handleClick(e) {
-        setClickValue(e.target.id)
+    }
+    function handleClick(ev) {
+        setSortBy(ev.target.id)
+    }
+    function handleDistance(ev) {
+        setDistanciaFilter(ev.target.value * 1)
+    }
+    function handleOrderBy(ev) {
+        setOrderBy(ev.target.value * 1)
     }
     return (
         <main className="container mx-auto mb-2 px-4 pt-20">
-            <button value="5" onClick={handleClick}></button>
+            <div className="flex justify-center gap-3 flex-wrap">
+                <div className="mb-3 xl:w-96">
+                    <label htmlFor="orderBy">Ordenar por</label>
+                    <select class="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" name="orderBy" onChange={handleOrderBy}>
+                        <option value="1">Orden Ascendente</option>
+                        <option value="0">Orden Descendente</option>
+                    </select>
+                </div>
+                <div className="relative pt-1">
+                    <label htmlFor="distance">Limitar Distancia a: <span className="text-gray-800">{distanciaFilter} KM</span></label>
+                    <input type="range" min="1" max="25" name="distance" value={distanciaFilter} className="w-full h-2 bg-gray-300 appearance-none" onChange={handleDistance} />
+                </div>
+            </div>
+
             <div className="tablaCombustible rounded-lg border shadow-2xl mt-5">
                 <table className="w-full">
                     <thead>
@@ -67,22 +106,19 @@ export default function Lista() {
                         </tr>
                     </thead>
                     <tbody>
-                        {gasFilter.sort((a, b) => {
-                            return a[clickValue] * 1 - b[clickValue] * 1;
-                        }).map((gasolinera) => {
-                            let precio95 = gasolinera.gasolina95.replace(',', '.') * 1, precio98 = gasolinera.gasolina98.replace(',', '.') * 1, precioGasA = gasolinera.gasoilA.replace(',', '.') * 1, precioGasPrem = gasolinera.gasoilPremium.replace(',', '.') * 1, precioGnc = gasolinera.gnc.replace(',', '.') * 1, precioGnl = gasolinera.gnl.replace(',', '.') * 1, precioGlp = gasolinera.glp.replace(',', '.') * 1;
+                        {gasFilter.map((gasolinera) => {
                             let nd = <span className='nd'>N/D</span>
                             return (
-                                <tr key={gasolinera.key}>
+                                <tr key={gasolinera.key} >
                                     <td className="p-4">{gasolinera.distanciaA} KM</td>
                                     <td className="p-4">{gasolinera.rotulo}</td>
-                                    <td className={"p-4 " + (precio95 > mediasCombustible.media95 ? 'caro' : 'barato')}>{gasolinera.gasolina95 ? gasolinera.gasolina95 + "€" : nd}</td>
-                                    <td className={"p-4 " + (precio98 > mediasCombustible.media98 ? 'caro' : 'barato')}>{gasolinera.gasolina98 ? gasolinera.gasolina98 + "€" : nd}</td>
-                                    <td className={"p-4 " + (precioGasA > mediasCombustible.mediaGasA ? 'caro' : 'barato')}>{gasolinera.gasoilA ? gasolinera.gasoilA + "€" : nd}</td>
-                                    <td className={"p-4 " + (precioGasPrem > mediasCombustible.mediaGasP ? 'caro' : 'barato')}>{gasolinera.gasoilPremium ? gasolinera.gasoilPremium + "€" : nd}</td>
-                                    <td className={"p-4 " + (precioGnc > mediasCombustible.mediaGnc ? 'caro' : 'barato')}>{gasolinera.gnc ? gasolinera.gnc + "€" : nd}</td>
-                                    <td className={"p-4 " + (precioGnl > mediasCombustible.mediaGnl ? 'caro' : 'barato')}>{gasolinera.gnl ? gasolinera.gnl + "€" : nd}</td>
-                                    <td className={"p-4 " + (precioGlp > mediasCombustible.mediaGlp ? 'caro' : 'barato')}>{gasolinera.glp ? gasolinera.glp + "€" : nd}</td>
+                                    <td className={"p-4 " + (gasolinera.gasolina95 > mediasCombustible.media95 ? 'caro' : 'barato')}>{gasolinera.gasolina95 && gasolinera.gasolina95 != 999 ? gasolinera.gasolina95 + "€" : nd}</td>
+                                    <td className={"p-4 " + (gasolinera.gasolina98 > mediasCombustible.media98 ? 'caro' : 'barato')}>{gasolinera.gasolina98 && gasolinera.gasolina98 != 999 ? gasolinera.gasolina98 + "€" : nd}</td>
+                                    <td className={"p-4 " + (gasolinera.gasoilA > mediasCombustible.mediaGasA ? 'caro' : 'barato')}>{gasolinera.gasoilA && gasolinera.gasoilA != 999 ? gasolinera.gasoilA + "€" : nd}</td>
+                                    <td className={"p-4 " + (gasolinera.gasoilPremium > mediasCombustible.mediaGasP ? 'caro' : 'barato')}>{gasolinera.gasoilPremium && gasolinera.gasoilPremium != 999 ? gasolinera.gasoilPremium + "€" : nd}</td>
+                                    <td className={"p-4 " + (gasolinera.gnc > mediasCombustible.mediaGnc ? 'caro' : 'barato')}>{gasolinera.gnc && gasolinera.gnc != 999 ? gasolinera.gnc + "€" : nd}</td>
+                                    <td className={"p-4 " + (gasolinera.gnl > mediasCombustible.mediaGnl ? 'caro' : 'barato')}>{gasolinera.gnl && gasolinera.gnl != 999 ? gasolinera.gnl + "€" : nd}</td>
+                                    <td className={"p-4 " + (gasolinera.glp > mediasCombustible.mediaGlp ? 'caro' : 'barato')}>{gasolinera.glp && gasolinera.glp != 999 ? gasolinera.glp + "€" : nd}</td>
                                 </tr>
                             )
                         })}
