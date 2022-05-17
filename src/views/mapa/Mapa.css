@@ -5,6 +5,9 @@
     height: 100%;
 }
 
+.leaflet-control-attribution{
+	display: none;
+}
 .leaflet-popup-content p{
     margin: 0;
 }
