@@ -17,6 +17,7 @@ export default function Lista() {
         document.body.classList.add('overflow');
         let gasTemp = JSON.parse(sessionStorage.getItem('gasolineras'));
         let ubiTemp = JSON.parse(sessionStorage.getItem('ubicacionUsuari'));
+        if (!gasTemp) window.location.href = window.location.protocol + "//" + window.location.host;
         gasTemp.splice(0, 1);
         gasTemp.splice(0, 1);
         setUbicacionUsuari(ubiTemp);

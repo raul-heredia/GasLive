@@ -24,9 +24,6 @@ function Nav() {
                 <NavLink to="/lista" className={({ isActive }) => (isActive ? `${defaultClasses} text-amber-500` : `${defaultClasses} text-gray-300`)}>
                   Lista
                 </NavLink>
-                <NavLink to="/favoritos" className={({ isActive }) => (isActive ? `${defaultClasses} text-amber-500` : `${defaultClasses} text-gray-300`)}>
-                  Favoritos
-                </NavLink>
               </div>
             </div>
           </div>
@@ -73,11 +70,6 @@ function Nav() {
               <div>
                 <NavLink to="/lista" className={({ isActive }) => (isActive ? `${defaultClasses} block text-amber-500` : `${defaultClasses} block text-gray-300`)}>
                   Lista
-                </NavLink>
-              </div>
-              <div>
-                <NavLink to="/favoritos" className={({ isActive }) => (isActive ? `${defaultClasses} block text-amber-500` : `${defaultClasses} block text-gray-300`)}>
-                  Favoritos
                 </NavLink>
               </div>
             </div>
