@@ -12,11 +12,14 @@ input[type=range]::-webkit-slider-thumb {
 }
 .no-ordered::after{
     opacity: 0;
-    content: '▲';
+    content: ' ▲';
+    font-size: 12px;
 }
 .order-asc::after{
-    content: '▲';
+    content: ' ▲';
+    font-size: 12px;
 }
 .order-desc::after{
-    content: '▼';
+    content: ' ▼';
+    font-size: 12px;
 }
