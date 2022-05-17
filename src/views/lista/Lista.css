@@ -10,9 +10,13 @@
 input[type=range]::-webkit-slider-thumb {
     background: red !important;
 }
+.no-ordered::after{
+    opacity: 0;
+    content: '▲';
+}
 .order-asc::after{
-    content: ' ▲';
+    content: '▲';
 }
 .order-desc::after{
-    content: ' ▼';
+    content: '▼';
 }

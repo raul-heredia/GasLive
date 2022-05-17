@@ -19,7 +19,6 @@ export default function Lista() {
         document.body.classList.add('overflow');
         let gasTemp = JSON.parse(sessionStorage.getItem('gasolineras')) || 0;
         if (!gasTemp) {
-            console.log("if");
             window.location.href = window.location.protocol + "//" + window.location.host;
         }
         let ubiTemp = JSON.parse(sessionStorage.getItem('ubicacionUsuari'));
@@ -29,7 +28,6 @@ export default function Lista() {
                 lng: -3.703790
             };
         }
-        console.log("splice")
         gasTemp.splice(0, 1);
         gasTemp.splice(0, 1);
         setUbicacionUsuari(ubiTemp);
@@ -126,14 +124,14 @@ export default function Lista() {
                     <thead>
                         <tr className="bg-gray-800 ph-5" onClick={handleClick}>
                             <th className="p-4 text-neutral-50 text-left cursor-pointer order-asc" id="distanciaA">Distancia</th>
-                            <th className="p-4 text-neutral-50 text-left cursor-default" id="rotulo">Gasolinera</th>
-                            <th className="p-4 text-neutral-50 text-left cursor-pointer" id="gasolina95">Gasolina 95</th>
-                            <th className="p-4 text-neutral-50 text-left cursor-pointer" id="gasolina98" >Gasolina 98</th>
-                            <th className="p-4 text-neutral-50 text-left cursor-pointer" id="gasoilA" >Gasoil A</th>
-                            <th className="p-4 text-neutral-50 text-left cursor-pointer" id="gasoilPremium" >Gasoil +</th>
-                            <th className="p-4 text-neutral-50 text-left cursor-pointer" id="gnc" >GNC</th>
-                            <th className="p-4 text-neutral-50 text-left cursor-pointer" id="gnl" >GNL</th>
-                            <th className="p-4 text-neutral-50 text-left cursor-pointer" id="glp" >GLP</th>
+                            <th className="p-4 text-neutral-50 text-left cursor-default no-ordered" id="rotulo">Gasolinera</th>
+                            <th className="p-4 text-neutral-50 text-left cursor-pointer no-ordered" id="gasolina95">Gasolina 95</th>
+                            <th className="p-4 text-neutral-50 text-left cursor-pointer no-ordered" id="gasolina98" >Gasolina 98</th>
+                            <th className="p-4 text-neutral-50 text-left cursor-pointer no-ordered" id="gasoilA" >Gasoil A</th>
+                            <th className="p-4 text-neutral-50 text-left cursor-pointer no-ordered" id="gasoilPremium" >Gasoil +</th>
+                            <th className="p-4 text-neutral-50 text-left cursor-pointer no-ordered" id="gnc" >GNC</th>
+                            <th className="p-4 text-neutral-50 text-left cursor-pointer no-ordered" id="gnl" >GNL</th>
+                            <th className="p-4 text-neutral-50 text-left cursor-pointer no-ordered" id="glp" >GLP</th>
                         </tr>
                     </thead>
                     <tbody>

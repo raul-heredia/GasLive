@@ -8,9 +8,19 @@ export function resetClasses() {
     document.getElementById("gnc").classList.remove('order-asc', 'order-desc');
     document.getElementById("gnl").classList.remove('order-asc', 'order-desc');
     document.getElementById("glp").classList.remove('order-asc', 'order-desc');
+    document.getElementById("distanciaA").classList.add('no-ordered');
+    document.getElementById("rotulo").classList.add('no-ordered');
+    document.getElementById("gasolina95").classList.add('no-ordered');
+    document.getElementById("gasolina98").classList.add('no-ordered');
+    document.getElementById("gasoilA").classList.add('no-ordered');
+    document.getElementById("gasoilPremium").classList.add('no-ordered');
+    document.getElementById("gnc").classList.add('no-ordered');
+    document.getElementById("gnl").classList.add('no-ordered');
+    document.getElementById("glp").classList.add('no-ordered');
 }
 export function addClass(id, order) {
     document.getElementById(id).classList.add(order)
+    document.getElementById(id).classList.remove("no-ordered")
 }
 
 export function switchClasses(order) {
