@@ -1,6 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import React, { useEffect, useState } from "react";
 import { calcCrow } from '../../assets/functions/calcDistancia'
 import { resetClasses, addClass, switchClasses } from "./classes";
 import "./Lista.css";
