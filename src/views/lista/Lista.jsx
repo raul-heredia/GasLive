@@ -94,7 +94,7 @@ export default function Lista() {
         setGasFilterSearch(ev.target.value);
     }
     return (
-        <main className="container mx-auto mb-2 px-4 pt-20">
+        <main className="container mx-auto mb-2 px-4 pt-5">
             <div className="flex justify-center gap-3 flex-wrap">
                 <div className="mb-3 xl:w-96">
                     <label htmlFor="orderBy">Ordenar por</label>
