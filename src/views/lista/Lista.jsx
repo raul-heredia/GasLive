@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { calcCrow } from '../../assets/functions/calcDistancia'
-import { resetClasses, addClass, switchClasses } from "./classes";
+import { resetClasses, addClass, switchClasses } from "./switchClasses";
 import "./Lista.css";
 
 export default function Lista() {
@@ -90,7 +90,6 @@ export default function Lista() {
         switchClasses(ev.target.value * 1);
     }
     function handleSearch(ev) {
-        console.log(ev.target.value);
         setGasFilterSearch(ev.target.value);
     }
     return (

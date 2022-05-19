@@ -110,7 +110,7 @@ export default function Mapa() {
                             </div>
         `
     }
-    function LoadMarkers() {
+    function LoadGasolineras() {
         const map = useMap();
         map.eachLayer(function (layer) {
             if (!layer._url) map.removeLayer(layer); // Quitar todos los layers excepto el del mapa para que no se dupliquen los iconos
@@ -196,7 +196,7 @@ export default function Mapa() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <LocationMarker />
-            <LoadMarkers />
+            <LoadGasolineras />
         </Map >
     );
 }
